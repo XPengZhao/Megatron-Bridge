@@ -1042,6 +1042,8 @@ class MegatronModelBridge(
 
         _hf_import_cache: Dict[str, torch.Tensor] = {}
         for task in self._with_progress_tracking(hf_to_megatron_tasks, description):
+            if task is None:
+                continue
             # None means megatron module not on current rank, skip if this task is not going to happen
             if task.megatron_module is None:
                 continue
